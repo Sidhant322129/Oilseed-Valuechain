@@ -1,0 +1,35 @@
+/* ==========================================================================
+   Global stylesheet entry point
+   --------------------------------------------------------------------------
+   Order matters:
+     1. Design tokens (CSS custom properties)
+     2. Reset + typography (base)
+     3. Reusable component classes (raw CSS)
+     4. Layout (app shell, auth page)
+     5. Third-party vendor overrides (Leaflet, Recharts)
+     6. Utilities / animations
+     7. Tailwind layers — utilities come last so className utilities
+        can always override the raw CSS above.
+   ========================================================================== */
+
+@import './base/variables.css';
+@import './base/reset.css';
+@import './base/typography.css';
+
+@import './components/buttons.css';
+@import './components/cards.css';
+@import './components/badges.css';
+@import './components/forms.css';
+@import './components/tables.css';
+
+@import './layout/shell.css';
+@import './layout/auth.css';
+
+@import './vendors/leaflet.css';
+@import './vendors/recharts.css';
+
+@import './utilities/animations.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

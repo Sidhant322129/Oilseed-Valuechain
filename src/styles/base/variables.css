@@ -1,0 +1,105 @@
+/* ==========================================================================
+   Design tokens — Sovereign Harvest (Light & Night Mode)
+   These variable names are consumed across every dashboard and component.
+   Both modes adhere strictly to the Sovereign Harvest design system.
+   ========================================================================== */
+
+:root,
+[data-theme='light'] {
+  /* Surfaces */
+  --bg-app: #F4F7F5;            /* page canvas behind cards */
+  --bg-primary: #FFFFFF;        /* inputs, sidebar, header */
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #F2F7F3;
+  --bg-sunken: #EEF2EF;
+  --bg-topbar: rgba(255, 255, 255, 0.92);
+
+  /* Borders */
+  --border-color: #D8E3D9;
+  --border-strong: #B9CBBD;
+  --border-glow: rgba(23, 74, 54, 0.22);
+
+  /* Brand */
+  --color-gold: #174A36;        /* primary action colour (forest) */
+  --color-gold-hover: #2F684B;
+  --color-canola: #E5A93C;      /* accent highlight */
+  --color-forest: #E8F1EA;
+  --color-emerald: #2F7D4F;
+  --color-deep-sap: #174A36;
+  --color-sap: #4F7A5B;
+  --color-crimson: #DA3633;
+  --color-blue: #1F6FEB;
+
+  /* Text — darkened for WCAG AA contrast */
+  --text-primary: #132A20;
+  --text-secondary: #34503F;
+  --text-muted: #5B7465;
+  --text-inverse: #FFFFFF;
+
+  /* Typography */
+  --font-heading: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Elevation */
+  --shadow-sm: 0 1px 2px rgba(19, 42, 32, 0.05);
+  --shadow-card: 0 1px 2px rgba(19, 42, 32, 0.04), 0 4px 16px rgba(19, 42, 32, 0.06);
+  --shadow-card-hover: 0 2px 4px rgba(19, 42, 32, 0.06), 0 12px 32px rgba(19, 42, 32, 0.1);
+  --ring-focus: 0 0 0 3px rgba(79, 122, 91, 0.25);
+
+  /* Radii */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  /* Layout */
+  --sidebar-width: 248px;
+  --sidebar-width-collapsed: 72px;
+  --header-height: 64px;
+
+  color-scheme: light;
+}
+
+/* ==========================================================================
+   Night Mode (Dark Slate Industrial & Institutional Web3 Terminal)
+   ========================================================================== */
+[data-theme='dark'],
+.dark {
+  /* Surfaces */
+  --bg-app: #0D1117;            /* dark slate page canvas */
+  --bg-primary: #161B22;        /* inputs, sidebar, header */
+  --bg-card: #161B22;           /* card surface */
+  --bg-card-hover: #1C2128;
+  --bg-sunken: #090D13;
+  --bg-topbar: rgba(22, 27, 34, 0.90);
+
+  /* Borders */
+  --border-color: #30363D;
+  --border-strong: #484F58;
+  --border-glow: rgba(229, 169, 60, 0.25);
+
+  /* Brand — Sovereign Harvest canonical theme */
+  --color-gold: #E5A93C;        /* Canola Gold */
+  --color-gold-hover: #F6D58E;
+  --color-canola: #E5A93C;
+  --color-forest: #14291F;
+  --color-emerald: #2EA043;     /* Telemetry Emerald */
+  --color-deep-sap: #E5A93C;    /* Bright Canola Gold for dark mode contrast */
+  --color-sap: #3FB950;
+  --color-crimson: #F85149;
+  --color-blue: #58A6FF;
+
+  /* Text */
+  --text-primary: #F0F6FC;
+  --text-secondary: #C9D1D9;
+  --text-muted: #8B949E;
+  --text-inverse: #0D1117;
+
+  /* Elevation */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  --shadow-card-hover: 0 4px 20px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(229, 169, 60, 0.25);
+  --ring-focus: 0 0 0 3px rgba(229, 169, 60, 0.35);
+
+  color-scheme: dark;
+}

@@ -1,0 +1,10 @@
+{
+  "network": "sepolia",
+  "chainId": 11155111,
+  "contracts": {
+    "BatchRecord": "0x364873607Ae44E56f9f8b1Bc460C87B8fa530ec7",
+    "FarmerRegistry": "0x951D793d1ec6f506EE10D7Dd74edF59D40Bfb0Bb",
+    "QualityOracle": "0xd7a578e86e517301db254cb31e33f83be9285177",
+    "OwnershipTransfer": "0x258df666321095eaa7fc56fd417e16691f86e7df"
+  }
+}

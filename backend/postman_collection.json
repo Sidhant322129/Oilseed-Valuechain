@@ -1,0 +1,1927 @@
+{
+  "info": {
+    "_postman_id": "oilseed-valuechain-api-v2",
+    "name": "Oilseed Value Chain API — Group 11",
+    "description": "Complete API collection. All protected routes require Authorization: Bearer {{bearerToken}}. Roles: farmer | fpo | processor | retailer | government | admin.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000",
+      "type": "string"
+    },
+    {
+      "key": "bearerToken",
+      "value": "PASTE_YOUR_SUPABASE_ACCESS_TOKEN_HERE",
+      "type": "string"
+    },
+    {
+      "key": "farmerUserId",
+      "value": "00000000-0000-0000-0000-000000000001",
+      "type": "string"
+    },
+    {
+      "key": "batchId",
+      "value": "00000000-0000-0000-0000-000000000002",
+      "type": "string"
+    },
+    {
+      "key": "orderId",
+      "value": "00000000-0000-0000-0000-000000000003",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "🩺 Health Check",
+      "item": [
+        {
+          "name": "GET /api/health",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/health"
+            },
+            "description": "No auth required. Returns API version and status."
+          }
+        }
+      ]
+    },
+    {
+      "name": "🔑 Auth",
+      "item": [
+        {
+          "name": "POST /api/auth/signup",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/signup"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"newfarmer@example.com\",\n  \"role\": \"farmer\",\n  \"full_name\": \"Rajan Kumar\"\n}"
+            },
+            "description": "Public. Returns 409 if account exists."
+          }
+        },
+        {
+          "name": "POST /api/auth/login",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"farmer@example.com\"\n}"
+            },
+            "description": "Public. Returns 404 if no account found."
+          }
+        },
+        {
+          "name": "POST /api/auth/verify-otp",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/verify-otp"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"farmer@example.com\",\n  \"token\": \"123456\",\n  \"role\": \"farmer\",\n  \"full_name\": \"Rajan Kumar\"\n}"
+            },
+            "description": "Returns access_token + refresh_token."
+          }
+        },
+        {
+          "name": "POST /api/auth/refresh",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/refresh"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refresh_token\": \"YOUR_REFRESH_TOKEN\"\n}"
+            }
+          }
+        },
+        {
+          "name": "GET /api/auth/me",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/me"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "description": "Returns authenticated user profile + role."
+          }
+        },
+        {
+          "name": "POST /api/auth/logout",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/logout"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "POST /api/auth/digilocker (501 Scaffold)",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/digilocker"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"farmer_id\": \"{{farmerUserId}}\"\n}"
+            },
+            "description": "Returns 501 — full Setu DigiLocker integration in Week 8."
+          }
+        }
+      ]
+    },
+    {
+      "name": "🌾 Farmers",
+      "item": [
+        {
+          "name": "GET /api/farmers",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/farmers"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "description": "Roles: farmer | fpo | admin"
+          }
+        },
+        {
+          "name": "GET /api/farmers/:id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/farmers/{{farmerUserId}}"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "POST /api/farmers",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/farmers"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"state\": \"Rajasthan\",\n  \"district\": \"Alwar\",\n  \"village\": \"Behror\",\n  \"pincode\": \"301701\",\n  \"total_land_area_acres\": 12.5\n}"
+            }
+          }
+        },
+        {
+          "name": "PATCH /api/farmers/:id",
+          "request": {
+            "method": "PATCH",
+            "url": {
+              "raw": "{{baseUrl}}/api/farmers/{{farmerUserId}}"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"total_land_area_acres\": 15\n}"
+            }
+          }
+        },
+        {
+          "name": "DELETE /api/farmers/:id (Admin Only)",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/farmers/{{farmerUserId}}"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "description": "Role: admin ONLY."
+          }
+        }
+      ]
+    },
+    {
+      "name": "🌱 Crops",
+      "item": [
+        {
+          "name": "GET /api/crops",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/crops"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "GET /api/crops/:id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/crops/{{batchId}}"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "POST /api/crops",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/crops"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"farmer_id\": \"{{farmerUserId}}\",\n  \"crop_type\": \"mustard\",\n  \"variety\": \"Pusa Bold\",\n  \"season\": \"rabi\",\n  \"sowing_date\": \"2025-10-15\",\n  \"expected_harvest_date\": \"2026-02-15\",\n  \"acreage_allocated\": 5\n}"
+            }
+          }
+        },
+        {
+          "name": "PATCH /api/crops/:id",
+          "request": {
+            "method": "PATCH",
+            "url": {
+              "raw": "{{baseUrl}}/api/crops/{{batchId}}"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"harvested\",\n  \"actual_yield_tonnes\": 8.5\n}"
+            }
+          }
+        },
+        {
+          "name": "DELETE /api/crops/:id",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/crops/{{batchId}}"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "🏪 Marketplace",
+      "item": [
+        {
+          "name": "GET /api/marketplace/batches",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/marketplace/batches"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "GET /api/marketplace/batches/:id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/marketplace/batches/{{batchId}}"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "PATCH /api/marketplace/batches/:id (status)",
+          "request": {
+            "method": "PATCH",
+            "url": {
+              "raw": "{{baseUrl}}/api/marketplace/batches/{{batchId}}"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"certified\"\n}"
+            }
+          }
+        },
+        {
+          "name": "POST /api/marketplace/orders (Place Order)",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/marketplace/orders"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"batch_id\": \"{{batchId}}\",\n  \"quantity_kg\": 500,\n  \"unit_price_per_kg\": 62.5,\n  \"delivery_address\": \"123 Mill Road, Indore\",\n  \"delivery_pincode\": \"452001\"\n}"
+            },
+            "description": "Roles: processor | retailer"
+          }
+        },
+        {
+          "name": "GET /api/marketplace/orders",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/marketplace/orders"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "PATCH /api/marketplace/orders/:id/cancel",
+          "request": {
+            "method": "PATCH",
+            "url": {
+              "raw": "{{baseUrl}}/api/marketplace/orders/{{orderId}}/cancel"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "POST /api/marketplace/orders/:id/pay",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/marketplace/orders/{{orderId}}/pay"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"razorpay_payment_id\": \"pay_PLACEHOLDER\",\n  \"razorpay_order_id\": \"order_PLACEHOLDER\",\n  \"razorpay_signature\": \"SIG_PLACEHOLDER\"\n}"
+            }
+          }
+        },
+        {
+          "name": "GET /api/marketplace/orders/:id/invoice",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/marketplace/orders/{{orderId}}/invoice"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "⛓️ Blockchain (Week 4 Scaffold)",
+      "item": [
+        {
+          "name": "POST /api/blockchain/register-batch",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/blockchain/register-batch"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"batch_id\": \"{{batchId}}\",\n  \"crop_type\": \"mustard\",\n  \"quantity_kg\": 500,\n  \"farmer_wallet\": \"0x0000000000000000000000000000000000000000\"\n}"
+            }
+          }
+        },
+        {
+          "name": "POST /api/blockchain/transfer-ownership",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/blockchain/transfer-ownership"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"batch_id\": \"{{batchId}}\",\n  \"from_wallet\": \"0xABC\",\n  \"to_wallet\": \"0xDEF\",\n  \"order_id\": \"{{orderId}}\"\n}"
+            }
+          }
+        },
+        {
+          "name": "POST /api/blockchain/pin-certificate",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/blockchain/pin-certificate"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"batch_id\": \"{{batchId}}\",\n  \"certificate_type\": \"quality\",\n  \"document_url\": \"https://example.com/cert.pdf\"\n}"
+            }
+          }
+        },
+        {
+          "name": "GET /api/blockchain/provenance/:batch_id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/blockchain/provenance/{{batchId}}"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "🤖 AI Engine (Weeks 5-6 Scaffold)",
+      "item": [
+        {
+          "name": "POST /api/ai/predict-price",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/ai/predict-price"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"crop_type\": \"mustard\",\n  \"mandi\": \"Alwar\",\n  \"state\": \"Rajasthan\"\n}"
+            }
+          }
+        },
+        {
+          "name": "POST /api/ai/forecast-demand",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/ai/forecast-demand"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"commodity\": \"mustard\",\n  \"region\": \"North India\",\n  \"forecast_months\": 3\n}"
+            }
+          }
+        },
+        {
+          "name": "POST /api/ai/detect-pest (multipart/form-data)",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/ai/detect-pest"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": ""
+                },
+                {
+                  "key": "crop_type",
+                  "value": "soyabean",
+                  "type": "text"
+                },
+                {
+                  "key": "farmer_id",
+                  "value": "{{farmerUserId}}",
+                  "type": "text"
+                }
+              ]
+            },
+            "description": "Upload crop leaf image file."
+          }
+        },
+        {
+          "name": "POST /api/ai/risk-score",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/ai/risk-score"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"farmer_id\": \"{{farmerUserId}}\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🔔 Notifications",
+      "item": [
+        {
+          "name": "GET /api/notifications",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/notifications"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "GET /api/notifications/price-alerts",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/notifications/price-alerts"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "PATCH /api/notifications/mark-all-read",
+          "request": {
+            "method": "PATCH",
+            "url": {
+              "raw": "{{baseUrl}}/api/notifications/mark-all-read"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "PATCH /api/notifications/:id/read",
+          "request": {
+            "method": "PATCH",
+            "url": {
+              "raw": "{{baseUrl}}/api/notifications/NOTIFICATION_UUID/read"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "POST /api/notifications (Admin/FPO/Govt)",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/notifications"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"{{farmerUserId}}\",\n  \"title\": \"Price Alert\",\n  \"message\": \"Mustard price surged 8% — Rs.6200/quintal at Alwar mandi.\",\n  \"type\": \"price_alert\"\n}"
+            }
+          }
+        },
+        {
+          "name": "DELETE /api/notifications/:id",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/notifications/NOTIFICATION_UUID"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "DELETE /api/notifications/price-alerts/cleanup",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/notifications/price-alerts/cleanup"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "💰 Finance",
+      "item": [
+        {
+          "name": "GET /api/finance/loans",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/finance/loans"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "GET /api/finance/loans/:id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/finance/loans/LOAN_UUID"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "POST /api/finance/loans (Apply)",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/finance/loans"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"farmer_id\": \"{{farmerUserId}}\",\n  \"amount_requested\": 150000,\n  \"tenure_months\": 12,\n  \"purpose\": \"seeds_and_fertilizers\"\n}"
+            }
+          }
+        },
+        {
+          "name": "PATCH /api/finance/loans/:id/status (Approve/Reject)",
+          "request": {
+            "method": "PATCH",
+            "url": {
+              "raw": "{{baseUrl}}/api/finance/loans/LOAN_UUID/status"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"approved\",\n  \"amount_approved\": 120000,\n  \"interest_rate_percent\": 7.5,\n  \"reviewer_notes\": \"Approved based on verified land records.\"\n}"
+            }
+          }
+        },
+        {
+          "name": "GET /api/finance/loans/:id/document",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/finance/loans/LOAN_UUID/document"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "GET /api/finance/insurance",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/finance/insurance"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "POST /api/finance/insurance (File Claim)",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/finance/insurance"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"farmer_id\": \"{{farmerUserId}}\",\n  \"crop_type\": \"mustard\",\n  \"claim_reason\": \"flood_damage\",\n  \"estimated_loss_inr\": 85000,\n  \"affected_area_acres\": 4.5\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🏭 Warehouse",
+      "item": [
+        {
+          "name": "GET /api/warehouse",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/warehouse"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "GET /api/warehouse/:id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/warehouse/WAREHOUSE_UUID"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "POST /api/warehouse",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/warehouse"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Alwar Central Warehouse\",\n  \"state\": \"Rajasthan\",\n  \"district\": \"Alwar\",\n  \"address\": \"Plot 12, Industrial Area, Alwar\",\n  \"pincode\": \"301001\",\n  \"total_capacity_tonnes\": 500,\n  \"available_capacity_tonnes\": 500\n}"
+            }
+          }
+        },
+        {
+          "name": "PATCH /api/warehouse/:id",
+          "request": {
+            "method": "PATCH",
+            "url": {
+              "raw": "{{baseUrl}}/api/warehouse/WAREHOUSE_UUID"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"available_capacity_tonnes\": 350\n}"
+            }
+          }
+        },
+        {
+          "name": "DELETE /api/warehouse/:id",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/warehouse/WAREHOUSE_UUID"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "🚚 Logistics",
+      "item": [
+        {
+          "name": "GET /api/logistics",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/logistics"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "GET /api/logistics/:id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/logistics/LOGISTICS_UUID"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "POST /api/logistics",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/logistics"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"batch_id\": \"{{batchId}}\",\n  \"warehouse_id\": \"WAREHOUSE_UUID\",\n  \"transporter_name\": \"Rajasthan Transport Co.\",\n  \"vehicle_number\": \"RJ-14-CA-1234\",\n  \"estimated_delivery_date\": \"2026-03-01\"\n}"
+            }
+          }
+        },
+        {
+          "name": "PATCH /api/logistics/:id/status",
+          "request": {
+            "method": "PATCH",
+            "url": {
+              "raw": "{{baseUrl}}/api/logistics/LOGISTICS_UUID/status"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"in_transit\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "⚙️ Admin",
+      "item": [
+        {
+          "name": "GET /api/admin/users",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/users"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "description": "Role: admin ONLY."
+          }
+        },
+        {
+          "name": "PATCH /api/admin/users/:id/role",
+          "request": {
+            "method": "PATCH",
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/users/{{farmerUserId}}/role"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"fpo\"\n}"
+            }
+          }
+        },
+        {
+          "name": "PATCH /api/admin/users/:id/verify",
+          "request": {
+            "method": "PATCH",
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/users/{{farmerUserId}}/verify"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"is_verified\": true\n}"
+            }
+          }
+        },
+        {
+          "name": "DELETE /api/admin/users/:id",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/users/{{farmerUserId}}"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "GET /api/admin/stats",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/stats"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "POST /api/admin/broadcast",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/broadcast"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Platform Maintenance\",\n  \"message\": \"Maintenance on Sunday 2am-4am IST.\",\n  \"target_roles\": [\n    \"farmer\",\n    \"fpo\",\n    \"processor\",\n    \"retailer\"\n  ]\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "📈 Prices",
+      "item": [
+        {
+          "name": "GET /api/prices",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/prices?crop_type=mustard&limit=30",
+              "query": [
+                {
+                  "key": "crop_type",
+                  "value": "mustard"
+                },
+                {
+                  "key": "limit",
+                  "value": "30"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "POST /api/prices (Record Price)",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/prices"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"commodity\": \"mustard\",\n  \"mandi\": \"Alwar\",\n  \"state\": \"Rajasthan\",\n  \"price_per_quintal\": 6200,\n  \"date\": \"2026-09-12\"\n}"
+            }
+          }
+        },
+        {
+          "name": "POST /api/prices/evaluate-alerts",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/prices/evaluate-alerts"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "🏛️ Admin Procurement Bid Monitor",
+      "item": [
+        {
+          "name": "GET /api/admin/procurement/overview",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/procurement/overview"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "description": "Returns live KPIs: open bids, closing within 24h, frozen bids, total value in play, crop breakdown, active quotes, open flags by severity."
+          }
+        },
+        {
+          "name": "GET /api/admin/procurement/bids",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/procurement/bids?status=open&crop_type=mustard"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "description": "Lists all procurement bids with filters (crop, status, FPO, price range, flagged only), sorting and pagination."
+          }
+        },
+        {
+          "name": "GET /api/admin/procurement/bids/:id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/procurement/bids/bid-fpo-101"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "description": "Full bid detail: bid info, MSP comparison, price revision history, ranked seller quotes, flags, and complete audit timeline."
+          }
+        },
+        {
+          "name": "GET /api/admin/procurement/audit-log",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/procurement/audit-log?limit=50"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "description": "Immutable append-only audit trail filterable by bid, actor role, and action type."
+          }
+        },
+        {
+          "name": "GET /api/admin/procurement/audit-log/export",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/procurement/audit-log/export"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "description": "Exports full immutable audit trail as a downloadable CSV."
+          }
+        },
+        {
+          "name": "GET /api/admin/procurement/flags",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/procurement/flags?status=open"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "description": "Lists anomaly detection flags sorted by severity and status."
+          }
+        },
+        {
+          "name": "PATCH /api/admin/procurement/flags/:id",
+          "request": {
+            "method": "PATCH",
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/procurement/flags/00000000-0000-0000-0000-000000000001"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"reviewed\",\n  \"review_note\": \"Anomaly verified and investigated by market administrator.\"\n}"
+            },
+            "description": "Update flag status (reviewed, dismissed, actioned) with administrator review note."
+          }
+        },
+        {
+          "name": "POST /api/admin/procurement/bids/:id/freeze",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/procurement/bids/bid-fpo-101/freeze"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Suspicious rapid price raising pattern identified. Trading halted pending investigation.\"\n}"
+            },
+            "description": "Freezes bid: rejects new quotes, raises, and quote acceptances."
+          }
+        },
+        {
+          "name": "POST /api/admin/procurement/bids/:id/unfreeze",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/procurement/bids/bid-fpo-101/unfreeze"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Legitimacy of price offer verified against local Mandi arrivals data.\"\n}"
+            },
+            "description": "Unfreezes bid and restores full trading."
+          }
+        },
+        {
+          "name": "POST /api/admin/procurement/bids/:id/force-close",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/procurement/bids/bid-fpo-101/force-close"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"FPO warehouse operational disruption. Tender terminated by administrative order.\"\n}"
+            },
+            "description": "Force-closes bid, records audit row, and dispatches notifications to FPO and quoting farmers."
+          }
+        },
+        {
+          "name": "POST /api/admin/procurement/quotes/:id/void",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/procurement/quotes/quote-101/void"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Farmer reported inventory damage before dispatch. Restoring unfulfilled quantity to bid.\"\n}"
+            },
+            "description": "Voids a quote and restores remaining_qty if it was previously accepted."
+          }
+        },
+        {
+          "name": "POST /api/admin/procurement/fpos/:id/suspend",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/procurement/fpos/00000000-0000-0000-0000-000000000001/suspend"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Persistent violation of statutory MSP pricing rules and repeated cancellations.\"\n}"
+            },
+            "description": "Suspends FPO from creating bids, raising prices, or accepting quotes."
+          }
+        },
+        {
+          "name": "POST /api/admin/procurement/fpos/:id/reinstate",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/procurement/fpos/00000000-0000-0000-0000-000000000001/reinstate"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"FPO governance board reviewed and compliance bond submitted.\"\n}"
+            },
+            "description": "Reinstates suspended FPO bidding privileges."
+          }
+        },
+        {
+          "name": "GET /api/admin/procurement/analytics",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/procurement/analytics"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "description": "Market analytics: offer vs MSP per crop, volume distribution, participation, and fill rate."
+          }
+        }
+      ]
+    },
+    {
+      "name": "🌾 Live Mandi Auction Engine (e-NAM)",
+      "item": [
+        {
+          "name": "GET /api/auction/lots",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/auction/lots?status=all&limit=30"
+            },
+            "description": "Public / Buyer live auction catalog with filters for status, crop, grade, location."
+          }
+        },
+        {
+          "name": "GET /api/auction/lots/:id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/auction/lots/33333333-3333-4000-8000-000000000001"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "description": "Full lot room details, anonymized bid ladder, quality specs, countdown."
+          }
+        },
+        {
+          "name": "GET /api/auction/ticker",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/auction/ticker"
+            },
+            "description": "Live Mandi price ticker and official CCEA MSP benchmarks."
+          }
+        },
+        {
+          "name": "POST /api/auction/lots (Farmer Create Lot)",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/auction/lots"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"crop_type\": \"mustard\",\n  \"qty_kg\": 5000,\n  \"grade\": \"A\",\n  \"location_mandi\": \"Kota Mandi, Rajasthan\",\n  \"reserve_price_per_kg\": 65.00,\n  \"start_price_per_kg\": 62.50,\n  \"bid_increment_per_kg\": 0.50,\n  \"duration_hours\": 2\n}"
+            },
+            "description": "Farmer lists an oilseed harvest lot. Rejects reserve below statutory CCEA MSP."
+          }
+        },
+        {
+          "name": "GET /api/auction/my-lots (Farmer)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/auction/my-lots"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "description": "Returns farmer's lots categorized into tabs: live, scheduled, sold, unsold."
+          }
+        },
+        {
+          "name": "POST /api/auction/lots/:id/accept-offer (Farmer)",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/auction/lots/33333333-3333-4000-8000-000000000001/accept-offer"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Farmer accepted best current high offer early.\"\n}"
+            },
+            "description": "Farmer sells lot immediately at current highest bid (must be >= reserve price)."
+          }
+        },
+        {
+          "name": "POST /api/auction/lots/:id/bid (FPO / Buyer)",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/auction/lots/33333333-3333-4000-8000-000000000001/bid"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount_per_kg\": 68.00,\n  \"max_proxy_amount\": 72.00,\n  \"idempotency_key\": \"BID-REQ-DEMO-001\"\n}"
+            },
+            "description": "Places bid. Triggers proxy auto-bidding engine, anti-sniping extension, limit validation."
+          }
+        },
+        {
+          "name": "GET /api/auction/my-bids (FPO / Buyer)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/auction/my-bids"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "description": "Returns FPO bids: active_winning, outbid, won, lost and bidding limit capacity."
+          }
+        },
+        {
+          "name": "POST /api/auction/watchlist/:lotId",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/auction/watchlist/33333333-3333-4000-8000-000000000001"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "description": "Toggles lot on bidder's watchlist."
+          }
+        },
+        {
+          "name": "GET /api/auction/requirements",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/auction/requirements"
+            },
+            "description": "Procurement Requirements demand board."
+          }
+        },
+        {
+          "name": "POST /api/auction/requirements",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/auction/requirements"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"crop_type\": \"mustard\",\n  \"quantity_tonnes\": 30,\n  \"max_price_per_kg\": 67.00,\n  \"delivery_deadline\": \"2026-10-25T00:00:00Z\",\n  \"target_warehouse_name\": \"Central Silo Alwar\"\n}"
+            },
+            "description": "FPO posts procurement demand. Farmers can list lots against it with one click."
+          }
+        },
+        {
+          "name": "POST /api/auction/lots/:id/freeze (Admin)",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/auction/lots/33333333-3333-4000-8000-000000000001/freeze"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Suspicious bidding pattern flagged by automated anomaly monitor.\"\n}"
+            },
+            "description": "Admin freezes an auction lot. Blocks incoming bids and logs audit trail."
+          }
+        },
+        {
+          "name": "POST /api/auction/lots/:id/unfreeze (Admin)",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/auction/lots/33333333-3333-4000-8000-000000000001/unfreeze"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Farmer identity and lot provenance verified by supervisory officer.\"\n}"
+            },
+            "description": "Admin unfreezes an auction lot to resume active bidding."
+          }
+        },
+        {
+          "name": "POST /api/auction/lots/:id/extend (Admin)",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/auction/lots/33333333-3333-4000-8000-000000000001/extend"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"minutes\": 30,\n  \"reason\": \"Mandi connectivity disruption during scheduled close window.\"\n}"
+            },
+            "description": "Admin extends auction lot close deadline by N minutes."
+          }
+        },
+        {
+          "name": "POST /api/auction/lots/:id/force-close (Admin)",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/auction/lots/33333333-3333-4000-8000-000000000001/force-close"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Urgent mandi floor order executed by market committee.\"\n}"
+            },
+            "description": "Admin forces early close and triggers settlement if reserve met."
+          }
+        }
+      ]
+    }
+  ]
+}

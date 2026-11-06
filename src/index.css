@@ -1,0 +1,2 @@
+/* Entry point — delegates to the structured styles directory */
+@import './styles/index.css';

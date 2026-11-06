@@ -1,0 +1,122 @@
+/* ==========================================================================
+   Forms
+   Global focus/placeholder treatment applies to every input in the app,
+   including the inline-styled ones inside dashboards.
+   ========================================================================== */
+
+input,
+select,
+textarea {
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--color-sap) !important;
+  box-shadow: var(--ring-focus);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #8AA092;
+  opacity: 1;
+}
+
+select option {
+  color: var(--text-primary);
+  background: var(--bg-primary);
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.form-hint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.65rem 0.9rem;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+}
+
+/* Alias used in Login.jsx and new UI components */
+.form-input {
+  width: 100%;
+  padding: 0.65rem 0.9rem;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+}
+
+.form-control:hover {
+  border-color: var(--border-strong);
+}
+
+.form-control.has-icon {
+  padding-left: 2.5rem;
+}
+
+.input-icon-wrap {
+  position: relative;
+}
+
+.input-icon-wrap > .input-icon {
+  position: absolute;
+  left: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.form-control.otp {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  letter-spacing: 0.35em;
+  text-align: center;
+}
+
+/* Alerts */
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  padding: 0.75rem 0.95rem;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
+.alert-error {
+  background: #FDECEC;
+  border-color: #F3BDBC;
+  color: #9E1F1C;
+}
+
+.alert-success {
+  background: #E3F4E8;
+  border-color: #B6DEC2;
+  color: #1A6B3C;
+}

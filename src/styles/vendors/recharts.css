@@ -1,0 +1,32 @@
+/* ==========================================================================
+   Recharts overrides
+   ========================================================================== */
+
+/* Prevent overflow inside flexbox card containers */
+.recharts-responsive-container {
+  overflow: hidden;
+}
+
+.recharts-cartesian-axis-tick-value {
+  fill: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 11px;
+}
+
+.recharts-cartesian-grid line {
+  stroke: var(--border-color) !important;
+  opacity: 0.6;
+}
+
+.recharts-legend-item-text {
+  color: var(--text-secondary) !important;
+  font-size: 12px;
+}
+
+.recharts-default-tooltip {
+  background-color: var(--bg-card) !important;
+  border-radius: 10px !important;
+  border: 1px solid var(--border-color) !important;
+  box-shadow: var(--shadow-card) !important;
+  color: var(--text-primary) !important;
+}

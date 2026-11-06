@@ -1,0 +1,70 @@
+[
+  {
+    "inputs": [],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "string", "name": "batchId", "type": "string" },
+      { "indexed": false, "internalType": "string", "name": "ipfsCID", "type": "string" },
+      { "indexed": false, "internalType": "string", "name": "certType", "type": "string" },
+      { "indexed": false, "internalType": "uint256", "name": "timestamp", "type": "uint256" }
+    ],
+    "name": "CertificateRecorded",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "", "type": "string" },
+      { "internalType": "uint256", "name": "", "type": "uint256" }
+    ],
+    "name": "batchCertificates",
+    "outputs": [
+      { "internalType": "string", "name": "ipfsCID", "type": "string" },
+      { "internalType": "string", "name": "certType", "type": "string" },
+      { "internalType": "uint256", "name": "timestamp", "type": "uint256" },
+      { "internalType": "address", "name": "issuedBy", "type": "address" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "string", "name": "_batchId", "type": "string" }],
+    "name": "getCertificates",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "string", "name": "ipfsCID", "type": "string" },
+          { "internalType": "string", "name": "certType", "type": "string" },
+          { "internalType": "uint256", "name": "timestamp", "type": "uint256" },
+          { "internalType": "address", "name": "issuedBy", "type": "address" }
+        ],
+        "internalType": "struct QualityOracle.Certificate[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "oracleAdmin",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "_batchId", "type": "string" },
+      { "internalType": "string", "name": "_ipfsCID", "type": "string" },
+      { "internalType": "string", "name": "_certType", "type": "string" }
+    ],
+    "name": "recordCertificate",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

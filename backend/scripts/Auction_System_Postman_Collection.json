@@ -1,0 +1,297 @@
+{
+  "info": {
+    "name": "Sovereign Harvest - Live Mandi Auction System",
+    "description": "Comprehensive Postman test collection for the Live Auction System across Farmer, FPO, and Admin roles.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:5000/api",
+      "type": "string"
+    },
+    {
+      "key": "farmer_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "fpo_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "admin_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "active_lot_id",
+      "value": "33333333-3333-4000-8000-000000000003",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "FARMER",
+      "item": [
+        {
+          "name": "Create Lot - Reject Below MSP (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{farmer_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"crop_type\": \"mustard\",\n  \"qty_kg\": 2000,\n  \"reserve_price_per_kg\": 50.0,\n  \"start_price_per_kg\": 50.0,\n  \"location_mandi\": \"Alwar APMC Mandi, Rajasthan\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/auction/lots", "host": ["{{base_url}}"], "path": ["auction", "lots"] }
+          }
+        },
+        {
+          "name": "Create Lot - Publish Valid Lot (201)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{farmer_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"crop_type\": \"mustard\",\n  \"qty_kg\": 3500,\n  \"reserve_price_per_kg\": 66.0,\n  \"start_price_per_kg\": 66.0,\n  \"grade\": \"Grade A\",\n  \"location_mandi\": \"Alwar APMC Mandi, Rajasthan\",\n  \"duration_hours\": 24\n}"
+            },
+            "url": { "raw": "{{base_url}}/auction/lots", "host": ["{{base_url}}"], "path": ["auction", "lots"] }
+          }
+        },
+        {
+          "name": "Get My Lots - Tabs",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{farmer_token}}" }
+            ],
+            "url": { "raw": "{{base_url}}/auction/my-lots", "host": ["{{base_url}}"], "path": ["auction", "my-lots"] }
+          }
+        },
+        {
+          "name": "Inspect Lot Room",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{farmer_token}}" }
+            ],
+            "url": { "raw": "{{base_url}}/auction/lots/{{active_lot_id}}", "host": ["{{base_url}}"], "path": ["auction", "lots", "{{active_lot_id}}"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "FPO / BUYER",
+      "item": [
+        {
+          "name": "Auction Floor - List Active Lots (Comma Filter)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/auction/lots?status=live,closing,scheduled",
+              "host": ["{{base_url}}"],
+              "path": ["auction", "lots"],
+              "query": [
+                { "key": "status", "value": "live,closing,scheduled" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Place Bid - Reject Below Increment (422)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{fpo_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lot_id\": \"{{active_lot_id}}\",\n  \"amount_per_kg\": 1.0,\n  \"idempotency_key\": \"pm-test-low-bid\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/auction/bid", "host": ["{{base_url}}"], "path": ["auction", "bid"] }
+          }
+        },
+        {
+          "name": "Place Bid - Valid Competitive Bid (200)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{fpo_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lot_id\": \"{{active_lot_id}}\",\n  \"amount_per_kg\": 75.0,\n  \"idempotency_key\": \"pm-test-valid-bid\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/auction/bid", "host": ["{{base_url}}"], "path": ["auction", "bid"] }
+          }
+        },
+        {
+          "name": "Place Bid - Proxy Auto-Bidding (200)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{fpo_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lot_id\": \"{{active_lot_id}}\",\n  \"amount_per_kg\": 75.5,\n  \"max_proxy_amount\": 80.0,\n  \"idempotency_key\": \"pm-test-proxy-bid\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/auction/bid", "host": ["{{base_url}}"], "path": ["auction", "bid"] }
+          }
+        },
+        {
+          "name": "Watchlist - Toggle Item",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{fpo_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lot_id\": \"{{active_lot_id}}\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/auction/watchlist", "host": ["{{base_url}}"], "path": ["auction", "watchlist"] }
+          }
+        },
+        {
+          "name": "Watchlist - Get Watchlisted Lots",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{fpo_token}}" }
+            ],
+            "url": { "raw": "{{base_url}}/auction/watchlist", "host": ["{{base_url}}"], "path": ["auction", "watchlist"] }
+          }
+        },
+        {
+          "name": "Get My Bids & Available Limit",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{fpo_token}}" }
+            ],
+            "url": { "raw": "{{base_url}}/auction/my-bids", "host": ["{{base_url}}"], "path": ["auction", "my-bids"] }
+          }
+        },
+        {
+          "name": "Requirements Board - List Requirements",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/auction/requirements", "host": ["{{base_url}}"], "path": ["auction", "requirements"] }
+          }
+        },
+        {
+          "name": "Requirements Board - Post New Requirement",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{fpo_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"crop_type\": \"mustard\",\n  \"quantity_kg\": 25000,\n  \"max_price_per_kg\": 67.0,\n  \"deadline\": \"2026-10-31\",\n  \"notes\": \"Chambal FPO collective bulk processing demand\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/auction/requirements", "host": ["{{base_url}}"], "path": ["auction", "requirements"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "ADMIN",
+      "item": [
+        {
+          "name": "Control Room - Monitor Overview",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{admin_token}}" }
+            ],
+            "url": { "raw": "{{base_url}}/admin/procurement/overview", "host": ["{{base_url}}"], "path": ["admin", "procurement", "overview"] }
+          }
+        },
+        {
+          "name": "Control Room - Freeze Lot",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{admin_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Quality audit compliance check\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/auction/lots/{{active_lot_id}}/freeze", "host": ["{{base_url}}"], "path": ["auction", "lots", "{{active_lot_id}}", "freeze"] }
+          }
+        },
+        {
+          "name": "Control Room - Extend Lot (+30m)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{admin_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"minutes\": 30,\n  \"reason\": \"Mandi connectivity maintenance window extension\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/auction/lots/{{active_lot_id}}/extend", "host": ["{{base_url}}"], "path": ["auction", "lots", "{{active_lot_id}}", "extend"] }
+          }
+        },
+        {
+          "name": "Control Room - Unfreeze Lot",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{admin_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Assayer verified seed moisture compliance\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/auction/lots/{{active_lot_id}}/unfreeze", "host": ["{{base_url}}"], "path": ["auction", "lots", "{{active_lot_id}}", "unfreeze"] }
+          }
+        },
+        {
+          "name": "Control Room - Force Close Lot",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{admin_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Administrative settlement reconciliation\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/auction/lots/{{active_lot_id}}/force-close", "host": ["{{base_url}}"], "path": ["auction", "lots", "{{active_lot_id}}", "force-close"] }
+          }
+        },
+        {
+          "name": "Audit Log - View Immutable Log",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{admin_token}}" }
+            ],
+            "url": { "raw": "{{base_url}}/admin/procurement/audit-log", "host": ["{{base_url}}"], "path": ["admin", "procurement", "audit-log"] }
+          }
+        }
+      ]
+    }
+  ]
+}

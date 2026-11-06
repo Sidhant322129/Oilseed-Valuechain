@@ -1,0 +1,43 @@
+{
+  "name": "oilseed-value-chain",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "AI-Enabled Value Chain Platform for Oilseed Self-Reliance",
+  "scripts": {
+    "dev": "vite",
+    "server": "node backend/src/server.js",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.1",
+    "axios": "^1.20.0",
+    "leaflet": "^1.9.4",
+    "lucide-react": "^0.475.0",
+    "pg": "^8.23.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-leaflet": "^5.0.0",
+    "react-router-dom": "^7.18.3",
+    "recharts": "^3.10.1"
+  },
+  "keywords": [
+    "oilseed",
+    "agriculture",
+    "ai",
+    "supabase",
+    "value-chain",
+    "agritech"
+  ],
+  "author": "Oilseed Self-Reliance Initiative",
+  "license": "MIT",
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.1.1",
+    "autoprefixer": "^10.6.0",
+    "pdfkit": "^0.20.2",
+    "postcss": "^8.5.28",
+    "tailwindcss": "^3.4.19",
+    "vite": "^8.2.2"
+  }
+}

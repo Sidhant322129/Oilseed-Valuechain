@@ -1,0 +1,12 @@
+{
+  "watch": ["src"],
+  "ext": "js,mjs,cjs",
+  "ignore": [
+    "data/**",
+    "**/data/**",
+    "*.json",
+    "**/*.json",
+    "data/blockchain_txs.json",
+    "**/blockchain_txs.json"
+  ]
+}

@@ -1,0 +1,73 @@
+/* ==========================================================================
+   Badges — supply-chain lifecycle & status pills
+   ========================================================================== */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.badge-dot::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.badge-gold,
+.badge-brand {
+  background: var(--color-forest);
+  color: var(--color-deep-sap);
+  border-color: var(--border-strong);
+}
+
+.badge-emerald,
+.badge-success {
+  background: #E3F4E8;
+  color: #1A6B3C;
+  border-color: #B6DEC2;
+}
+
+.badge-warning {
+  background: #FFF4D6;
+  color: #8A5A00;
+  border-color: #F2D58C;
+}
+
+.badge-crimson,
+.badge-danger {
+  background: #FDECEC;
+  color: #B42724;
+  border-color: #F3BDBC;
+}
+
+.badge-info {
+  background: #E6F0FF;
+  color: #1550B8;
+  border-color: #B9D2FB;
+}
+
+.badge-neutral {
+  background: var(--bg-sunken);
+  color: var(--text-secondary);
+  border-color: var(--border-color);
+}
+
+/* Lifecycle stages: Registered → Certified → Dispatched → Received → Sold */
+.badge-stage-registered { background: #EEF2EF; color: #34503F; border-color: #CFDED2; }
+.badge-stage-certified  { background: #E3F4E8; color: #1A6B3C; border-color: #B6DEC2; }
+.badge-stage-dispatched { background: #E6F0FF; color: #1550B8; border-color: #B9D2FB; }
+.badge-stage-received   { background: #F1EAFE; color: #5B2DB3; border-color: #D5C4F7; }
+.badge-stage-sold       { background: #FFF4D6; color: #8A5A00; border-color: #F2D58C; }

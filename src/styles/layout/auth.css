@@ -1,0 +1,101 @@
+/* ==========================================================================
+   Auth / Login page — split layout
+   Left: brand panel over photography (dark overlay for contrast)
+   Right: clean white form panel
+   ========================================================================== */
+
+.auth-page {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  min-height: 100vh;
+  background: var(--bg-app);
+  color: var(--text-primary);
+}
+
+.auth-hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 3rem;
+  overflow: hidden;
+  color: #FFFFFF;
+  background-color: #0F3627;
+  background-image: url('/images/login-image.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.auth-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(1200px 600px at 0% 100%, rgba(229, 169, 60, 0.18), transparent 60%),
+    linear-gradient(160deg, rgba(10, 36, 25, 0.94) 0%, rgba(15, 54, 39, 0.85) 55%, rgba(10, 36, 25, 0.94) 100%);
+}
+
+.auth-hero > * {
+  position: relative;
+}
+
+.auth-hero h1,
+.auth-hero h2 {
+  color: #FFFFFF;
+}
+
+.auth-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1.5rem;
+  background: var(--bg-primary);
+  border-left: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.auth-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 12px;
+  background: var(--bg-sunken);
+  border: 1px solid var(--border-color);
+}
+
+.auth-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.55rem;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.auth-tab:hover {
+  color: var(--text-primary);
+}
+
+.auth-tab.is-active {
+  background: var(--bg-card);
+  color: var(--color-gold);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+}
+
+@media (max-width: 960px) {
+  .auth-page {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-hero {
+    display: none;
+  }
+}

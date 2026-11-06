@@ -1,0 +1,242 @@
+[
+  {
+    "id": "audit-1791374386878-ma1c",
+    "bid_id": null,
+    "quote_id": null,
+    "actor_id": null,
+    "actor_role": "system",
+    "action": "admin_force_close",
+    "old_value": null,
+    "new_value": null,
+    "reason": "Mandi administrative early settlement reconciliation",
+    "ip_address": null,
+    "created_at": "2026-10-07T11:59:46.878Z"
+  },
+  {
+    "id": "audit-1791374385944-umuy",
+    "bid_id": null,
+    "quote_id": null,
+    "actor_id": null,
+    "actor_role": "system",
+    "action": "admin_unfreeze",
+    "old_value": null,
+    "new_value": null,
+    "reason": "Assayer verified seed moisture < 8%",
+    "ip_address": null,
+    "created_at": "2026-10-07T11:59:45.944Z"
+  },
+  {
+    "id": "audit-1791374384713-m2wh",
+    "bid_id": null,
+    "quote_id": null,
+    "actor_id": null,
+    "actor_role": "system",
+    "action": "deadline_extended",
+    "old_value": null,
+    "new_value": null,
+    "reason": "Mandi connectivity maintenance window extension",
+    "ip_address": null,
+    "created_at": "2026-10-07T11:59:44.713Z"
+  },
+  {
+    "id": "audit-1791374383677-fai3",
+    "bid_id": null,
+    "quote_id": null,
+    "actor_id": null,
+    "actor_role": "system",
+    "action": "admin_freeze",
+    "old_value": null,
+    "new_value": null,
+    "reason": "Routine quality parameter audit compliance check",
+    "ip_address": null,
+    "created_at": "2026-10-07T11:59:43.677Z"
+  },
+  {
+    "id": "audit-1791374377600-hqlf",
+    "bid_id": "LOT-MUS-GCC7",
+    "quote_id": null,
+    "actor_id": "0334bba1-15b7-439a-aa0f-ec7fa4eac86e",
+    "actor_role": "buyer",
+    "action": "bid_placed",
+    "old_value": {
+      "old_high_bid": 67,
+      "old_high_bidder": "Sneheraj"
+    },
+    "new_value": {
+      "new_high_bid": 67.5,
+      "bidder_org": "Sneheraj",
+      "extended": false
+    },
+    "reason": "Bid ₹67.5/kg placed by Sneheraj",
+    "ip_address": "::1",
+    "created_at": "2026-10-07T11:59:37.600Z"
+  },
+  {
+    "id": "audit-1791374375866-nbjo",
+    "bid_id": "LOT-MUS-GCC7",
+    "quote_id": null,
+    "actor_id": "0334bba1-15b7-439a-aa0f-ec7fa4eac86e",
+    "actor_role": "buyer",
+    "action": "bid_placed",
+    "old_value": {},
+    "new_value": {
+      "new_high_bid": 67,
+      "bidder_org": "Sneheraj",
+      "extended": false
+    },
+    "reason": "Bid ₹67/kg placed by Sneheraj",
+    "ip_address": "::1",
+    "created_at": "2026-10-07T11:59:35.866Z"
+  },
+  {
+    "id": "audit-1791374370812-zxlx",
+    "bid_id": "LOT-MUS-GCC7",
+    "quote_id": null,
+    "actor_id": "764876b9-b961-43d5-b800-392431308ef4",
+    "actor_role": "farmer",
+    "action": "lot_created",
+    "old_value": null,
+    "new_value": {
+      "lot_code": "LOT-MUS-GCC7",
+      "farmer_id": "764876b9-b961-43d5-b800-392431308ef4",
+      "crop_type": "mustard",
+      "qty_kg": 3500,
+      "grade": "Grade A",
+      "location_mandi": "Alwar APMC Mandi, Rajasthan",
+      "images": [],
+      "reserve_price_per_kg": 66,
+      "start_price_per_kg": 66,
+      "bid_increment_per_kg": 0.5,
+      "starts_at": "2026-10-07T11:59:30.555Z",
+      "ends_at": "2026-10-08T11:59:30.555Z",
+      "original_ends_at": "2026-10-08T11:59:30.555Z",
+      "status": "live",
+      "requirement_id": null,
+      "created_at": "2026-10-07T11:59:30.555Z",
+      "updated_at": "2026-10-07T11:59:30.555Z"
+    },
+    "reason": "Farmer created lot LOT-MUS-GCC7 for 3500kg mustard (Reserve: ₹66/kg)",
+    "ip_address": null,
+    "created_at": "2026-10-07T11:59:30.812Z"
+  },
+  {
+    "id": "audit-1791374178338-rkkk",
+    "bid_id": null,
+    "quote_id": null,
+    "actor_id": null,
+    "actor_role": "system",
+    "action": "admin_force_close",
+    "old_value": null,
+    "new_value": null,
+    "reason": "Mandi administrative early settlement reconciliation",
+    "ip_address": null,
+    "created_at": "2026-10-07T11:56:18.338Z"
+  },
+  {
+    "id": "audit-1791374177074-l2wz",
+    "bid_id": null,
+    "quote_id": null,
+    "actor_id": null,
+    "actor_role": "system",
+    "action": "admin_unfreeze",
+    "old_value": null,
+    "new_value": null,
+    "reason": "Assayer verified seed moisture < 8%",
+    "ip_address": null,
+    "created_at": "2026-10-07T11:56:17.074Z"
+  },
+  {
+    "id": "audit-1791374176133-6ep0",
+    "bid_id": null,
+    "quote_id": null,
+    "actor_id": null,
+    "actor_role": "system",
+    "action": "deadline_extended",
+    "old_value": null,
+    "new_value": null,
+    "reason": "Mandi connectivity maintenance window extension",
+    "ip_address": null,
+    "created_at": "2026-10-07T11:56:16.133Z"
+  },
+  {
+    "id": "audit-1791374175215-kzrd",
+    "bid_id": null,
+    "quote_id": null,
+    "actor_id": null,
+    "actor_role": "system",
+    "action": "admin_freeze",
+    "old_value": null,
+    "new_value": null,
+    "reason": "Routine quality parameter audit compliance check",
+    "ip_address": null,
+    "created_at": "2026-10-07T11:56:15.215Z"
+  },
+  {
+    "id": "audit-1791374169205-q8p3",
+    "bid_id": "LOT-MUS-T41B",
+    "quote_id": null,
+    "actor_id": "0334bba1-15b7-439a-aa0f-ec7fa4eac86e",
+    "actor_role": "buyer",
+    "action": "bid_placed",
+    "old_value": {
+      "old_high_bid": 67,
+      "old_high_bidder": "Sneheraj"
+    },
+    "new_value": {
+      "new_high_bid": 67.5,
+      "bidder_org": "Sneheraj",
+      "extended": false
+    },
+    "reason": "Bid ₹67.5/kg placed by Sneheraj",
+    "ip_address": "::1",
+    "created_at": "2026-10-07T11:56:09.205Z"
+  },
+  {
+    "id": "audit-1791374167484-gsqe",
+    "bid_id": "LOT-MUS-T41B",
+    "quote_id": null,
+    "actor_id": "0334bba1-15b7-439a-aa0f-ec7fa4eac86e",
+    "actor_role": "buyer",
+    "action": "bid_placed",
+    "old_value": {},
+    "new_value": {
+      "new_high_bid": 67,
+      "bidder_org": "Sneheraj",
+      "extended": false
+    },
+    "reason": "Bid ₹67/kg placed by Sneheraj",
+    "ip_address": "::1",
+    "created_at": "2026-10-07T11:56:07.484Z"
+  },
+  {
+    "id": "audit-1791374161923-sv7r",
+    "bid_id": "LOT-MUS-T41B",
+    "quote_id": null,
+    "actor_id": "764876b9-b961-43d5-b800-392431308ef4",
+    "actor_role": "farmer",
+    "action": "lot_created",
+    "old_value": null,
+    "new_value": {
+      "lot_code": "LOT-MUS-T41B",
+      "farmer_id": "764876b9-b961-43d5-b800-392431308ef4",
+      "crop_type": "mustard",
+      "qty_kg": 3500,
+      "grade": "Grade A",
+      "location_mandi": "Alwar APMC Mandi, Rajasthan",
+      "images": [],
+      "reserve_price_per_kg": 66,
+      "start_price_per_kg": 66,
+      "bid_increment_per_kg": 0.5,
+      "starts_at": "2026-10-07T11:56:01.665Z",
+      "ends_at": "2026-10-08T11:56:01.665Z",
+      "original_ends_at": "2026-10-08T11:56:01.665Z",
+      "status": "live",
+      "requirement_id": null,
+      "created_at": "2026-10-07T11:56:01.665Z",
+      "updated_at": "2026-10-07T11:56:01.665Z"
+    },
+    "reason": "Farmer created lot LOT-MUS-T41B for 3500kg mustard (Reserve: ₹66/kg)",
+    "ip_address": null,
+    "created_at": "2026-10-07T11:56:01.923Z"
+  }
+]

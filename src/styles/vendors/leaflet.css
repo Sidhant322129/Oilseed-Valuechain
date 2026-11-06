@@ -1,0 +1,105 @@
+/* ==========================================================================
+   Leaflet overrides
+   ========================================================================== */
+
+/* Keep Leaflet UI below React modals */
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 400 !important;
+}
+
+.leaflet-pane {
+  z-index: 200 !important;
+}
+
+.leaflet-container {
+  background: var(--bg-sunken, #090D13) !important;
+  font-family: var(--font-body);
+  border-radius: var(--radius-md);
+}
+
+/* Dark mode map tiles filter for Web3 Sovereign Harvest dark mode */
+[data-theme='dark'] .leaflet-tile-pane {
+  filter: brightness(0.85) invert(0.92) contrast(1.15) hue-rotate(180deg) saturate(0.35);
+}
+
+/* Popups — styled to match dark and light themes dynamically */
+.leaflet-popup-content-wrapper {
+  border-radius: 12px !important;
+  border: 1px solid var(--border-color, #30363D) !important;
+  background: var(--bg-card, #161B22) !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45) !important;
+  color: var(--text-primary, #F0F6FC) !important;
+}
+
+.leaflet-popup-content {
+  margin: 14px 16px !important;
+  color: var(--text-primary, #F0F6FC) !important;
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.leaflet-popup-content strong {
+  color: var(--color-gold, #E5A93C) !important;
+}
+
+.leaflet-popup-tip {
+  background: var(--bg-card, #161B22) !important;
+  box-shadow: none !important;
+  border: 1px solid var(--border-color, #30363D) !important;
+}
+
+.leaflet-container a.leaflet-popup-close-button {
+  color: var(--text-muted, #8B949E) !important;
+  top: 8px;
+  right: 8px;
+  padding: 4px;
+}
+
+.leaflet-container a.leaflet-popup-close-button:hover {
+  color: var(--text-primary, #F0F6FC) !important;
+}
+
+/* Zoom controls */
+.leaflet-bar {
+  border: 1px solid var(--border-color, #30363D) !important;
+  border-radius: 8px !important;
+  overflow: hidden;
+  box-shadow: var(--shadow-card) !important;
+  background: var(--bg-card, #161B22) !important;
+}
+
+.leaflet-bar a {
+  background: var(--bg-card, #161B22) !important;
+  color: var(--text-primary, #F0F6FC) !important;
+  border-bottom: 1px solid var(--border-color, #30363D) !important;
+}
+
+.leaflet-bar a:hover {
+  background: var(--bg-card-hover, #21262D) !important;
+  color: var(--color-gold, #E5A93C) !important;
+}
+
+/* Custom DivIcon markers */
+.custom-map-marker {
+  background: transparent !important;
+  border: 0 !important;
+}
+
+.custom-map-marker > div {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45) !important;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.custom-map-marker > div:hover {
+  transform: scale(1.06);
+  box-shadow: 0 6px 18px rgba(229, 169, 60, 0.35) !important;
+}
+
+.leaflet-tooltip {
+  border-radius: 8px;
+  background: var(--bg-card, #161B22) !important;
+  border: 1px solid var(--border-color, #30363D) !important;
+  color: var(--text-primary, #F0F6FC) !important;
+  box-shadow: var(--shadow-card);
+}
